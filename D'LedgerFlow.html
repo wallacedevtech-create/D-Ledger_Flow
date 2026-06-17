@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D'Ledger Flow 1.0 — Previsibilidade Financeira</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=network_intel_node" />
+<style>
+/* ==========================================================================
+   DESIGN SYSTEM & VARIÁVEIS GLOBAIS DE TEMA (MODO CLARO E ESCURO)
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --border: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    
+    --brand-color: #4c97c9;         /* Cor Emergente de Alerta de Tráfego */
+    --brand-hover: #e05e00;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --transition: all 0.25s ease;
+}
+
+[data-theme="dark"] {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --border: #334155;
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+/* ==========================================================================
+   RESETS E ESTRUTURAS SEMÂNTICAS BASE
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    transition: var(--transition);
+    line-height: 1.5;
+    padding-bottom: 60px; /* Prevenção de quebra em telas móveis */
+}
+
+.main-container {
+    max-width: 640px; /* Container otimizado para simulação Mobile em Desktop */
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* ==========================================================================
+   HEADER FIXO E CONTROLADORES DE ABAS (TABS)
+   ========================================================================== */
+.main-header {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px 6px 15px;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    align-items: center;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--brand-color);
+}
+
+.btn-theme {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.nav-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.nav-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-link {
+    flex: 1;
+    min-width: 80px;
+    background: none;
+    border: none;
+    padding: 12px 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: var(--transition);
+}
+
+.tab-link.active {
+    color: var(--brand-color);
+    border-bottom-color: var(--brand-color);
+}
+
+/* ==========================================================================
+   COMPONENTES CORE DE DESIGN INTERNO (CARDS, KPIS)
+   ========================================================================== */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.card-hero {
+    background: linear-gradient(135deg, #ff6b00 0%, #dd4b00 100%);
+    color: #ffffff;
+    border: none;
+    text-align: center;
+}
+
+.balance-main {
+    font-size: 2.6rem;
+    font-weight: 900;
+    margin: 10px 0;
+    letter-spacing: -1px;
+}
+
+.motivation-text {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.cycle-badge {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 20px 0 10px 0;
+    color: var(--text-primary);
+}
+
+/* Grids Flexíveis */
+.kpi-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.kpi-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px;
+}
+
+.kpi-card span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.kpi-card strong {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+/* Cores Utilitárias */
+.text-success { color: var(--success) !important; }
+.text-primary { color: var(--brand-color) !important; }
+.text-center { text-align: center; }
+
+.window-positive { border-left: 4px solid var(--success); }
+.window-negative { border-left: 4px solid var(--danger); }
+.window-warning { border-left: 4px solid var(--warning); }
+.window-info { border-left: 4px solid var(--info); }
+
+/* ==========================================================================
+   BARRAS DE PROGRESSO FINANCEIRO
+   ========================================================================== */
+.card-header-split {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.badge-pct {
+    font-weight: 700;
+    background-color: var(--brand-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+}
+
+.progress-bar-bg {
+    background-color: var(--bg-main);
+    border-radius: 20px;
+    height: 12px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background-color: var(--success);
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s ease-out;
+}
+
+.progress-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 6px;
+    color: var(--text-muted);
+}
+
+.msg-status-financeiro {
+    font-size: 0.85rem;
+    margin-top: 10px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ==========================================================================
+   FORMULÁRIOS MOBILES & ENTRADAS DE DADOS
+   ========================================================================== */
+.form-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.form-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+input, select {
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+input:focus, select:focus {
+    border-color: var(--brand-color);
+    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
+}
+
+/* Botões */
+.action-card {
+    margin-bottom: 16px;
+}
+
+.btn-primary-lg {
+    width: 100%;
+    background-color: var(--brand-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.btn-submit {
+    background-color: var(--success);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.btn-secondary { background-color: var(--info); }
+.btn-danger { background-color: var(--danger) !important; color: white !important;}
+
+/* ==========================================================================
+   TABELAS E COMPONENTES RESPONSIVOS
+   ========================================================================== */
+.responsive-table {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+th {
+    background-color: var(--bg-main);
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+/* Lista de distribuição detalhada */
+.distribution-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.dist-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 0.9rem;
+}
+
+/* Painel de Manutenção de Reservas */
+.reserves-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.reserve-row-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-main);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+}
+
+/* Gráficos Nativos Baseados em CSS Flex */
+.pure-chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chart-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chart-label-fixed {
+    width: 90px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chart-bar-lane {
+    flex: 1;
+    background-color: var(--bg-main);
+    height: 18px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.chart-bar-filled {
+    background-color: var(--brand-color);
+    height: 100%;
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.1, 1, 0.1, 1);
+}
+
+/* Sistema Global de Notificações In-App */
+.alerts-container {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 30px);
+    max-width: 580px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.alert-toast {
+    background-color: #ef4444;
+    color: white;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: auto;
+}
+
+.backup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.btn-action {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-label-upload {
+    display: block;
+}
+
+/* Controladores Visuais das Abas Activas */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+</style>
+</head>
+<body>
+
+    <div id="wrapper-alertas" class="alerts-container"></div>
+
+    <header class="main-header">
+        <div class="header-top">
+            
+<h1 class="logo" style="display: flex; align-items: center; gap: 10px;">
+  <span class="logo-icon material-symbols-outlined" style="font-size: 3rem;">network_intel_node</span> 
+  D'<span>Ledger Flow</span>
+</h1>
+            <button id="btn-theme-toggle" class="btn-theme" aria-label="Alternar Tema">🌓</button>
+        </div>
+        <nav class="nav-tabs">
+            <button class="tab-link active" data-tab="tab-home">🏠 Início</button>
+            <button class="tab-link" data-tab="tab-ganhos">💰 Ganhos</button>
+            <button class="tab-link" data-tab="tab-contas">📋 Contas</button>
+            <button class="tab-link" data-tab="tab-reservas">🛡️ Reservas</button>
+            <button class="tab-link" data-tab="tab-config">⚙️ Ajustes</button>
+        </nav>
+    </header>
+
+    <main class="main-container">
+
+        <section id="tab-home" class="tab-content active">
+            <div class="action-card">
+                <button class="btn-primary-lg" onclick="switchTab('tab-ganhos')">➕ Registrar Novo Ganho</button>
+            </div>
+
+            <div class="card card-hero">
+                <h3>Quanto do dinheiro ganho é realmente MEU?</h3>
+                <div class="balance-main" id="txt-livre-acumulado">R$ 0,00</div>
+                <p class="motivation-text">💡 <em>Se possível, preserve este valor até o fechamento do ciclo.</em></p>
+                <div class="cycle-badge">
+                    <span>Ciclo Atual: <strong id="txt-ciclo-tipo">--</strong></span>
+                    <span>Dias Restantes: <strong id="txt-ciclo-restante">--</strong></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header-split">
+                    <h4>Reserva de Garantia (Contas do Mês)</h4>
+                    <span id="txt-garantia-porcentagem" class="badge-pct">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="bar-garantia" class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+                <div class="progress-footer">
+                    <span id="txt-garantia-acumulado">Acumulado: R$ 0,00</span>
+                    <span id="txt-garantia-meta">Meta: R$ 0,00</span>
+                </div>
+                <p id="msg-garantia" class="msg-status-financeiro"></p>
+            </div>
+
+            <h3 class="section-title">Resumo de Hoje</h3>
+            <div class="kpi-grid-2">
+                <div class="kpi-card text-center">
+                    <span class="kpi-label">Ganho Bruto</span>
+                    <strong class="kpi-value text-primary" id="today-bruto">R$ 0,00</strong>
+                </div>
+                <div class="kpi-card text-center">
+                    <span class="kpi-label">Seu Valor Livre</span>
+                    <strong class="kpi-value text-success" id="today-livre">R$ 0,00</strong>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Distribuição do Ganho de Hoje</h4>
+                <div class="distribution-list" id="list-distribuicao-hoje">
+                    </div>
+            </div>
+
+            <h3 class="section-title">Resumo do Período Atual</h3>
+            <div class="kpi-grid-2">
+                <div class="kpi-card"><span>Total Ganho</span><strong id="per-bruto">R$ 0,00</strong></div>
+                <div class="kpi-card"><span>Total Corridas</span><strong id="per-corridas">0</strong></div>
+                <div class="kpi-card"><span>Média por Dia</span><strong id="per-media-dia">R$ 0,00</strong></div>
+                <div class="kpi-card"><span>Média por Corrida</span><strong id="per-media-corrida">R$ 0,00</strong></div>
+                <div class="kpi-card"><span>Dias Trabalhados</span><strong id="per-dias">0</strong></div>
+                <div class="kpi-card"><span>Valor Livre Acumulado</span><strong class="text-success" id="per-livre">R$ 0,00</strong></div>
+                <div class="kpi-card window-positive"><span>👍 Melhor Dia</span><strong id="per-melhor">--</strong></div>
+                <div class="kpi-card window-negative"><span>👎 Pior Dia</span><strong id="per-pior">--</strong></div>
+            </div>
+
+            <h3 class="section-title">Desempenho por Atividade</h3>
+            <div class="card">
+                <div class="pure-chart-wrapper" id="chart-atividades"></div>
+            </div>
+            
+            <h3 class="section-title">Formas de Recebimento</h3>
+            <div class="card">
+                <div class="pure-chart-wrapper" id="chart-pagamentos"></div>
+            </div>
+        </section>
+
+        <section id="tab-ganhos" class="tab-content">
+            <div class="card">
+                <h3>📋 Lançar Atividade Diária</h3>
+                <form id="form-ganho" class="form-vertical">
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="ganho-data">Data</label>
+                            <input type="date" id="ganho-data" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ganho-atividade">Atividade / App</label>
+                            <select id="ganho-atividade" required>
+                                <option value="iFood">iFood</option>
+                                <option value="Uber Carro">Uber Carro</option>
+                                <option value="Uber Moto">Uber Moto</option>
+                                <option value="99">99</option>
+                                <option value="Shopee">Shopee</option>
+                                <option value="Mercado Livre">Mercado Livre</option>
+                                <option value="Mototáxi">Mototáxi</option>
+                                <option value="Freelancer">Freelancer</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="ganho-bruto">Ganho Bruto (R$)</label>
+                            <input type="number" id="ganho-bruto" step="0.01" min="0.01" required placeholder="0,00">
+                        </div>
+                        <div class="form-group">
+                            <label for="ganho-corridas">Qtd. Corridas/Entregas</label>
+                            <input type="number" id="ganho-corridas" min="1" required placeholder="Ex: 15">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ganho-valores-ind">Valores Individuais (Opcional - Separados por vírgula)</label>
+                        <input type="text" id="ganho-valores-ind" placeholder="Ex: 10.50, 12, 8.75">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ganho-recebimento">Forma de Recebimento</label>
+                        <select id="ganho-recebimento" required>
+                            <option value="Pix">Pix</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Cartão/Maquininha">Cartão / Maquininha</option>
+                            <option value="Misto">Misto</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Processar e Distribuir Ganho</button>
+                </form>
+            </div>
+
+            <h3>Histórico de Lançamentos</h3>
+            <div class="responsive-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Atividade</th>
+                            <th>Bruto</th>
+                            <th>Vl. Livre</th>
+                            <th>Corridas</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-ganhos-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-contas" class="tab-content">
+            <div class="kpi-grid-2" style="margin-bottom: 20px;">
+                <div class="kpi-card window-negative"><span>Vencidas</span><strong id="status-vencidas">R$ 0,00</strong></div>
+                <div class="kpi-card window-warning"><span>Vencem Hoje</span><strong id="status-hoje">R$ 0,00</strong></div>
+                <div class="kpi-card window-info"><span>Próximos 7 dias</span><strong id="status-7dias">R$ 0,00</strong></div>
+                <div class="kpi-card window-positive"><span>Pagas</span><strong id="status-pagas">R$ 0,00</strong></div>
+            </div>
+
+            <div class="card">
+                <h3>➕ Cadastrar Nova Conta / Despesa</h3>
+                <form id="form-conta" class="form-vertical">
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="conta-nome">Nome da Conta</label>
+                            <input type="text" id="conta-nome" required placeholder="Ex: Aluguel, Parcela Moto">
+                        </div>
+                        <div class="form-group">
+                            <label for="conta-valor">Valor (R$)</label>
+                            <input type="number" id="conta-valor" step="0.01" min="0.01" required placeholder="0,00">
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="conta-vencimento">Data de Vencimento</label>
+                            <input type="date" id="conta-vencimento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="conta-fluxo">Classificação</label>
+                            <select id="conta-fluxo" onchange="toggleFormParcelas(this.value)" required>
+                                <option value="Fixa-Permanente">Fixa (Permanente - Ex: Aluguel)</option>
+                                <option value="Fixa-Parcelada">Fixa (Parcelada - Ex: Financiamento)</option>
+                                <option value="Variavel">Variável (Ex: Mercado, Farmácia)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="row-parcelas" class="form-row-2" style="display: none;">
+                        <div class="form-group">
+                            <label for="conta-parcela-atual">Parcela Atual</label>
+                            <input type="number" id="conta-parcela-atual" min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="conta-parcelas-total">Total de Parcelas</label>
+                            <input type="number" id="conta-parcelas-total" min="1" value="12">
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="group-categoria" style="display: none;">
+                        <label for="conta-categoria">Categoria (Variável)</label>
+                        <input type="text" id="conta-categoria" placeholder="Ex: Alimentação, Saúde, Lazer">
+                    </div>
+
+                    <button type="submit" class="btn-submit">Salvar Conta</button>
+                </form>
+            </div>
+
+            <h3>Lista de Despesas Cadastradas</h3>
+            <div class="responsive-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome / Tipo</th>
+                            <th>Valor</th>
+                            <th>Vencimento</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-contas-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-reservas" class="tab-content">
+            <div class="card">
+                <h3>Gestão Física de Reservas Acumuladas</h3>
+                <p class="hint">Adicione ou retire valores das suas caixas financeiras manualmente quando necessário.</p>
+                <div class="reserves-panel" id="panel-saldos-reservas">
+                    </div>
+            </div>
+
+            <div class="card">
+                <h3>⚡ Movimentar Caixa de Reserva</h3>
+                <form id="form-movimentacao" class="form-vertical">
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="mov-reserva">Caixa de Destino</label>
+                            <select id="mov-reserva" required>
+                                <option value="Garantia">Reserva de Garantia</option>
+                                <option value="Emergencia">Reserva de Emergência</option>
+                                <option value="Manutencao">Reserva de Manutenção</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mov-tipo">Tipo de Operação</label>
+                            <select id="mov-tipo" required>
+                                <option value="Entrada">Entrada (Aporte Extra)</option>
+                                <option value="Saida">Saída (Retirada/Gasto)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="mov-valor">Valor (R$)</label>
+                            <input type="number" id="mov-valor" step="0.01" min="0.01" required placeholder="0,00">
+                        </div>
+                        <div class="form-group">
+                            <label for="mov-data">Data</label>
+                            <input type="date" id="mov-data" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mov-motivo">Motivo / Descrição</label>
+                        <input type="text" id="mov-motivo" required placeholder="Ex: Troca de pastilha de freio, Compra de remédio">
+                    </div>
+                    <button type="submit" class="btn-submit btn-secondary">Registrar Movimentação</button>
+                </form>
+            </div>
+
+            <h3>Histórico de Movimentações</h3>
+            <div class="responsive-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Reserva</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-movimentos-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-config" class="tab-content">
+            <div class="card">
+                <h3>⚙️ Configuração do Modelo de Distribuição</h3>
+                <form id="form-config" class="form-vertical">
+                    <div class="form-group">
+                        <label for="cfg-ciclo">Ciclo Financeiro Operacional</label>
+                        <select id="cfg-ciclo">
+                            <option value="7">7 Dias (Semanal)</option>
+                            <option value="15">15 Dias (Quinzena)</option>
+                            <option value="26">26 Dias (Mensal de Trabalho)</option>
+                            <option value="30">30 Dias (Mensal Integral)</option>
+                        </select>
+                    </div>
+                    
+                    <h4 style="margin: 15px 0 5px 0;">Divisão Automática de Ganhos (%)</h4>
+                    <p class="hint" style="margin-bottom: 15px;">Defina a fatia de cada real que entra. O total deve ser de até 100%.</p>
+                    
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="cfg-pct-gasolina">⛽ Gasolina (%)</label>
+                            <input type="number" id="cfg-pct-gasolina" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-pct-taxas">👥 Taxas/Grupos (%)</label>
+                            <input type="number" id="cfg-pct-taxas" min="0" max="100" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label for="cfg-pct-garantia">📋 Garantia (%)</label>
+                            <input type="number" id="cfg-pct-garantia" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-pct-emergencia">🚨 Emergência (%)</label>
+                            <input type="number" id="cfg-pct-emergencia" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-pct-manutencao">🔧 Manutenção (%)</label>
+                            <input type="number" id="cfg-pct-manutencao" min="0" max="100" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Gravar Parâmetros</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>🏍️ Perfil e Manutenção do Veículo</h3>
+                <form id="form-veiculo" class="form-vertical">
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label for="vei-tipo">Tipo</label>
+                            <select id="vei-tipo">
+                                <option value="Moto">Motocicleta</option>
+                                <option value="Carro">Automóvel</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="vei-modelo">Modelo</label>
+                            <input type="text" id="vei-modelo" placeholder="Ex: Titan 160">
+                        </div>
+                        <div class="form-group">
+                            <label for="vei-ano">Ano</label>
+                            <input type="number" id="vei-ano" placeholder="2024">
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="vei-km">Km Atual</label>
+                            <input type="number" id="vei-km" placeholder="Ex: 24500">
+                        </div>
+                        <div class="form-group">
+                            <label for="vei-consumo">Consumo Médio (Km/L)</label>
+                            <input type="number" id="vei-consumo" step="0.1" placeholder="Ex: 40">
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="vei-oleo">Última Troca de Óleo (Km)</label>
+                            <input type="number" id="vei-oleo" placeholder="Ex: 23000">
+                        </div>
+                        <div class="form-group">
+                            <label for="vei-revisao">Última Revisão Geral (Km)</label>
+                            <input type="number" id="vei-revisao" placeholder="Ex: 20000">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit btn-secondary">Atualizar Status Físico</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>💾 Integração de Segurança e Dados</h3>
+                <div class="backup-grid">
+                    <button class="btn-action" onclick="exportToCSV()">Exportar Planilha (CSV)</button>
+                    <button class="btn-action" onclick="exportBackupJSON()">Exportar Cópia (JSON)</button>
+                    <label class="btn-action btn-label-upload" for="input-import-json">Importar Cópia (JSON)</label>
+                    <input type="file" id="input-import-json" accept=".json" style="display: none;" onchange="importBackupJSON(event)">
+                    <button class="btn-action btn-danger" onclick="hardResetSystem()">Apagar Banco Local</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+/**
+ * ==========================================================================
+ * D'Ledger Flow 1.0 — SISTEMA ARQUITETURAL FINANCEIRO OFF-LINE
+ * DESENVOLVIDO EM JAVASCRIPT VANILLA PURO (ES6)
+ * ==========================================================================
+ */
+
+// --- 1. ESTADO GLOBAL DA APLICAÇÃO (SINGLE SOURCE OF TRUTH) ---
+let DB = {
+    config: {
+        ciclo: 30,
+        porcentagens: {
+            gasolina: 25,
+            taxas: 5,
+            garantia: 30,
+            emergencia: 15,
+            manutencao: 15
+        }
+    },
+    veiculo: {
+        tipo: 'Moto',
+        modelo: '',
+        ano: '',
+        kmAtual: 0,
+        consumoMedio: 0,
+        lastOleoKm: 0,
+        lastRevisaoKm: 0
+    },
+    ganhos: [],      // Elementos: {id, data, atividade, bruto, corridas, valoresInd[], recebimento}
+    contas: [],      // Elementos: {id, nome, valor, vencimento, fluxo, parcelaAtual, parcelasTotal, categoria, paga}
+    movimentacoes: [] // Elementos: {id, data, reserva, tipo, valor, motivo}
+};
+
+// --- 2. INICIALIZADOR GLOBAL (LIFECYCLE) ---
+document.addEventListener("DOMContentLoaded", () => {
+    initDatabase();
+    initThemeEngine();
+    setupDomForms();
+    syncConfigInputs();
+    renderApp();
+});
+
+// --- 3. INFRAESTRUTURA DE PERSISTÊNCIA (LOCALSTORAGE) ---
+function initDatabase() {
+    const localData = localStorage.getItem("girocerto_db");
+    if (localData) {
+        try {
+            DB = JSON.parse(localData);
+            // Tratamento preventivo de objetos internos ausentes em versões anteriores
+            if (!DB.movimentacoes) DB.movimentacoes = [];
+            if (!DB.veiculo) DB.veiculo = { tipo: 'Moto', kmAtual: 0, lastOleoKm: 0, lastRevisaoKm: 0 };
+        } catch (e) {
+            console.error("Falha ao descriptografar banco local. Resetando padrão.", e);
+        }
+    } else {
+        // Carga inicial de demonstração limpa
+        saveStorage();
+    }
+}
+
+function saveStorage() {
+    localStorage.setItem("girocerto_db", JSON.stringify(DB));
+}
+
+// --- 4. MOTOR DE RENDERIZAÇÃO CENTRAL E LÓGICA DE NEGÓCIO ---
+function renderApp() {
+    processAlertasEIndicadores();
+    calculateDashboardKPIs();
+    renderHistoricoGanhos();
+    renderModuloContas();
+    renderModuloReservas();
+}
+
+// --- 5. ENGINE DE CÁLCULOS E AGRUPAMENTO FINANCEIRO ---
+function calculateDashboardKPIs() {
+    const hojeStr = new Date().toISOString().split('T')[0];
+    
+    // Configurações do ciclo do usuário
+    const pctG = DB.config.porcentagens;
+    const totalPctsEstrategicos = pctG.gasolina + pctG.taxas + pctG.garantia + pctG.emergencia + pctG.manutencao;
+    const pctLivreReal = Math.max(0, 100 - totalPctsEstrategicos) / 100;
+
+    // --- KPIs de Hoje ---
+    let brutoHoje = 0;
+    let corridasHoje = 0;
+    DB.ganhos.filter(g => g.data === hojeStr).forEach(g => {
+        brutoHoje += g.bruto;
+        corridasHoje += g.corridas;
+    });
+    let livreHoje = brutoHoje * pctLivreReal;
+
+    document.getElementById("today-bruto").innerText = formatBRL(brutoHoje);
+    document.getElementById("today-livre").innerText = formatBRL(livreHoje);
+
+    // Lista dinâmica de distribuição de Hoje
+    const distHojeContainer = document.getElementById("list-distribuicao-hoje");
+    distHojeContainer.innerHTML = `
+        <div class="dist-item"><span>⛽ Gasolina (${pctG.gasolina}%):</span><strong>${formatBRL(brutoHoje * (pctG.gasolina/100))}</strong></div>
+        <div class="dist-item"><span>👥 Taxas/Grupos (${pctG.taxas}%):</span><strong>${formatBRL(brutoHoje * (pctG.taxas/100))}</strong></div>
+        <div class="dist-item"><span>📋 Reserva Garantia (${pctG.garantia}%):</span><strong>${formatBRL(brutoHoje * (pctG.garantia/100))}</strong></div>
+        <div class="dist-item"><span>🚨 Reserva Emergência (${pctG.emergencia}%):</span><strong>${formatBRL(brutoHoje * (pctG.emergencia/100))}</strong></div>
+        <div class="dist-item"><span>🔧 Reserva Manutenção (${pctG.manutencao}%):</span><strong>${formatBRL(brutoHoje * (pctG.manutencao/100))}</strong></div>
+        <div class="dist-item" style="border-top: 1px solid var(--border); font-weight:700;">
+            <span class="text-success">💵 Valor Real Livre:</span><strong class="text-success">${formatBRL(livreHoje)}</strong>
+        </div>
+    `;
+
+    // --- KPIs do Período / Histórico ---
+    let totalBruto = 0;
+    let totalCorridas = 0;
+    let diasTrabalhadosSet = new Set();
+    let mapaDias = {};
+    let mapaAtividades = {};
+    let mapaPagamentos = { Pix: 0, Dinheiro: 0, "Cartão/Maquininha": 0, Misto: 0 };
+
+    DB.ganhos.forEach(g => {
+        totalBruto += g.bruto;
+        totalCorridas += g.corridas;
+        diasTrabalhadosSet.add(g.data);
+        mapaDias[g.data] = (mapaDias[g.data] || 0) + g.bruto;
+        mapaAtividades[g.atividade] = (mapaAtividades[g.atividade] || 0) + g.bruto;
+        if(mapaPagamentos[g.recebimento] !== undefined) mapaPagamentos[g.recebimento] += g.bruto;
+    });
+
+    const totalDias = diasTrabalhadosSet.size;
+
+    // Determinação de Extremos (Melhor/Pior dia)
+    let melhorDiaStr = "--";
+    let piorDiaStr = "--";
+    let maxGanho = -1;
+    let minGanho = Infinity;
+
+    Object.keys(mapaDias).forEach(d => {
+        if (mapaDias[d] > maxGanho) { maxGanho = mapaDias[d]; melhorDiaStr = `${formatDataBR(d)} (${formatBRL(maxGanho)})`; }
+        if (mapaDias[d] < minGanho) { minGanho = mapaDias[d]; piorDiaStr = `${formatDataBR(d)} (${formatBRL(minGanho)})`; }
+    });
+
+    document.getElementById("per-bruto").innerText = formatBRL(totalBruto);
+    document.getElementById("per-corridas").innerText = totalCorridas;
+    document.getElementById("per-media-dia").innerText = formatBRL(totalDias > 0 ? totalBruto / totalDias : 0);
+    document.getElementById("per-media-corrida").innerText = formatBRL(totalCorridas > 0 ? totalBruto / totalCorridas : 0);
+    document.getElementById("per-dias").innerText = totalDias;
+    document.getElementById("per-melhor").innerText = melhorDiaStr;
+    document.getElementById("per-pior").innerText = piorDiaStr === Infinity ? "--" : piorDiaStr;
+
+    // --- CÁLCULO FÍSICO REAL DAS RESERVAS (Entradas Automáticas + Movimentações Manuais) ---
+    let acumuladoGarantia = (totalBruto * (pctG.garantia / 100)) + getSomaMovimentacoes("Garantia");
+    let acumuladoEmergencia = (totalBruto * (pctG.emergencia / 100)) + getSomaMovimentacoes("Emergencia");
+    let acumuladoManutencao = (totalBruto * (pctG.manutencao / 100)) + getSomaMovimentacoes("Manutencao");
+    let acumuladoLivreTotal = (totalBruto * pctLivreReal);
+
+    document.getElementById("txt-livre-acumulado").innerText = formatBRL(acumuladoLivreTotal);
+    document.getElementById("per-livre").innerText = formatBRL(acumuladoLivreTotal);
+
+    // --- GESTÃO DA RESERVA DE GARANTIA (SOMA DE CONTAS DO PERÍODO) ---
+    // Meta = soma de todas as contas que NÃO são variáveis
+    const metaGarantiaContas = DB.contas.filter(c => c.fluxo !== 'Variavel').reduce((acc, obj) => acc + obj.valor, 0);
+    document.getElementById("txt-garantia-meta").innerText = `Meta: ${formatBRL(metaGarantiaContas)}`;
+    document.getElementById("txt-garantia-acumulado").innerText = `Separado: ${formatBRL(acumuladoGarantia)}`;
+    
+    let pctProgressoGarantia = 0;
+    if (metaGarantiaContas > 0) {
+        pctProgressoGarantia = Math.min(100, (acumuladoGarantia / metaGarantiaContas) * 100);
+    }
+    document.getElementById("bar-garantia").style.width = `${pctProgressoGarantia}%`;
+    document.getElementById("txt-garantia-porcentagem").innerText = `${pctProgressoGarantia.toFixed(1)}%`;
+
+    const txtMsgGarantia = document.getElementById("msg-garantia");
+    if (metaGarantiaContas === 0) {
+        txtMsgGarantia.innerText = "Nenhuma conta fixa cadastrada para este ciclo.";
+        txtMsgGarantia.style.color = "var(--text-muted)";
+    } else if (pctProgressoGarantia >= 100) {
+        txtMsgGarantia.innerText = "Parabéns! As contas do período estão garantidas.";
+        txtMsgGarantia.style.color = "var(--success)";
+    } else {
+        txtMsgGarantia.innerText = `Você já garantiu ${pctProgressoGarantia.toFixed(1)}% das contas deste período.`;
+        txtMsgGarantia.style.color = "var(--brand-color)";
+    }
+
+    // Cronômetro do Ciclo
+    document.getElementById("txt-ciclo-tipo").innerText = `${DB.config.ciclo} Dias`;
+    const diasRestantes = Math.max(0, DB.config.ciclo - totalDias);
+    document.getElementById("txt-ciclo-restante").innerText = `${diasRestantes} dias`;
+
+    // Renderização dos gráficos nativos CSS
+    renderCssBarChart("chart-atividades", mapaAtividades);
+    renderCssBarChart("chart-pagamentos", mapaPagamentos);
+}
+
+function getSomaMovimentacoes(tipoReserva) {
+    return DB.movimentacoes
+        .filter(m => m.reserva === tipoReserva)
+        .reduce((acc, m) => m.tipo === 'Entrada' ? acc + m.valor : acc - m.valor, 0);
+}
+
+// --- 6. CRIAÇÃO DE GRÁFICOS SEM DEPENDÊNCIAS (CSS ENGINE) ---
+function renderCssBarChart(elementId, dataset) {
+    const wrapper = document.getElementById(elementId);
+    wrapper.innerHTML = "";
+
+    const valores = Object.values(dataset);
+    const maxVal = Math.max(...valores, 1);
+
+    Object.keys(dataset).forEach(key => {
+        const totalValue = dataset[key] || 0;
+        const pctBar = (totalValue / maxVal) * 100;
+
+        const row = document.createElement("div");
+        row.className = "chart-row";
+        row.innerHTML = `
+            <div class="chart-label-fixed">${key}</div>
+            <div class="chart-bar-lane">
+                <div class="chart-bar-filled" style="width: ${pctBar}%"></div>
+            </div>
+            <div style="font-size: 0.75rem; font-weight:700; width: 65px; text-align:right;">${formatBRL(totalValue)}</div>
+        `;
+        wrapper.appendChild(row);
+    });
+}
+
+// --- 7. REGRAS DE NEGÓCIO E RENDER DO MÓDULO DE LANÇAMENTOS ---
+function renderHistoricoGanhos() {
+    const tbody = document.getElementById("table-ganhos-body");
+    tbody.innerHTML = "";
+
+    const pctG = DB.config.porcentagens;
+    const descTotal = (pctG.gasolina + pctG.taxas + pctG.garantia + pctG.emergencia + pctG.manutencao) / 100;
+
+    const listaOrdenada = [...DB.ganhos].sort((a,b) => new Date(b.data) - new Date(a.data));
+
+    listaOrdenada.forEach(g => {
+        const valorLivreItem = g.bruto * (1 - descTotal);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${formatDataBR(g.data)}</td>
+            <td><strong>${g.atividade}</strong> <small style="display:block; color:var(--text-muted)">${g.recebimento}</small></td>
+            <td>${formatBRL(g.bruto)}</td>
+            <td class="text-success font-weight-700">${formatBRL(valorLivreItem)}</td>
+            <td>${g.corridas}</td>
+            <td><button class="btn-action btn-danger" style="padding:4px 8px;" onclick="deletarRegistroGanho('${g.id}')">Excluir</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// --- 8. REGRAS DE NEGÓCIO E RENDER DO MÓDULO DE CONTAS / DESPESAS ---
+function renderModuloContas() {
+    const tbody = document.getElementById("table-contas-body");
+    tbody.innerHTML = "";
+
+    const hoje = new Date().toISOString().split('T')[0];
+    const seteDiasDepois = new Date();
+    seteDiasDepois.setDate(seteDiasDepois.getDate() + 7);
+    const seteDiasDepoisStr = seteDiasDepois.toISOString().split('T')[0];
+
+    let vVencidas = 0, vHoje = 0, v7Dias = 0, vPagas = 0;
+
+    DB.contas.forEach(c => {
+        if (c.paga) {
+            vPagas += c.valor;
+        } else {
+            if (c.vencimento < hoje) vVencidas += c.valor;
+            else if (c.vencimento === hoje) vHoje += c.valor;
+            else if (c.vencimento > hoje && c.vencimento <= seteDiasDepoisStr) v7Dias += c.valor;
+        }
+
+        const tr = document.createElement("tr");
+        let txtStatus = c.paga ? `<span class="text-success">✓ Paga</span>` : `<span>Em Aberto</span>`;
+        if(!c.paga && c.vencimento < hoje) txtStatus = `<span style="color:var(--danger); font-weight:700;">⚠️ Vencida</span>`;
+
+        let infoParcela = c.fluxo === 'Fixa-Parcelada' ? `<small style="display:block;color:var(--text-muted)">Parcela: ${c.parcelaAtual}/${c.parcelasTotal}</small>` : '';
+
+        tr.innerHTML = `
+            <td><strong>${c.nome}</strong><small style="display:block;color:var(--text-muted)">${c.fluxo}</small>${infoParcela}</td>
+            <td>${formatBRL(c.valor)}</td>
+            <td>${formatDataBR(c.vencimento)}</td>
+            <td>${txtStatus}</td>
+            <td style="display:flex; gap:4px;">
+                ${!c.paga ? `<button class="btn-action" style="background-color:var(--success); color:white;" onclick="liquidarConta('${c.id}')">Pagar</button>` : ''}
+                <button class="btn-action btn-danger" style="padding:4px 8px;" onclick="deletarConta('${c.id}')">X</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("status-vencidas").innerText = formatBRL(vVencidas);
+    document.getElementById("status-hoje").innerText = formatBRL(vHoje);
+    document.getElementById("status-7dias").innerText = formatBRL(v7Dias);
+    document.getElementById("status-pagas").innerText = formatBRL(vPagas);
+}
+
+// --- 9. MODULAÇÃO E MOVIMENTAÇÃO DE RESERVAS ---
+function renderModuloReservas() {
+    const totalBruto = DB.ganhos.reduce((acc, g) => acc + g.bruto, 0);
+    const pcts = DB.config.porcentagens;
+
+    const rGarantia = (totalBruto * (pcts.garantia / 100)) + getSomaMovimentacoes("Garantia");
+    const rEmergencia = (totalBruto * (pcts.emergencia / 100)) + getSomaMovimentacoes("Emergencia");
+    const rManutencao = (totalBruto * (pcts.manutencao / 100)) + getSomaMovimentacoes("Manutencao");
+
+    const panel = document.getElementById("panel-saldos-reservas");
+    panel.innerHTML = `
+        <div class="reserve-row-item">
+            <div><strong>📋 Reserva de Garantia</strong><small style="display:block;color:var(--text-muted)">Foco: Pagamento de Contas</small></div>
+            <strong style="font-size:1.2rem;">${formatBRL(rGarantia)}</strong>
+        </div>
+        <div class="reserve-row-item">
+            <div><strong>🚨 Reserva de Emergência</strong><small style="display:block;color:var(--text-muted)">Foco: Imprevistos Críticos de Vida</small></div>
+            <strong style="font-size:1.2rem; color:var(--warning);">${formatBRL(rEmergencia)}</strong>
+        </div>
+        <div class="reserve-row-item">
+            <div><strong>🔧 Reserva de Manutenção</strong><small style="display:block;color:var(--text-muted)">Foco: Pneus, Óleo e Revisões do Veículo</small></div>
+            <strong style="font-size:1.2rem; color:var(--info);">${formatBRL(rManutencao)}</strong>
+        </div>
+    `;
+
+    // Render do histórico das movimentações estruturadas
+    const tbody = document.getElementById("table-movimentos-body");
+    tbody.innerHTML = "";
+    
+    [...DB.movimentacoes].sort((a,b) => new Date(b.data) - new Date(a.data)).forEach(m => {
+        const tr = document.createElement("tr");
+        const isEntrada = m.type === 'Entrada';
+        tr.innerHTML = `
+            <td>${formatDataBR(m.data)}</td>
+            <td>${m.reserva}</td>
+            <td style="color:${m.tipo === 'Entrada' ? 'var(--success)' : 'var(--danger)'}; font-weight:700;">${m.tipo}</td>
+            <td>${formatBRL(m.valor)}</td>
+            <td>${m.motivo}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// --- 10. TRATAMENTO INTELIGENTE DE ALERTAS DINÂMICOS NO PRODUTO ---
+function processAlertasEIndicadores() {
+    const container = document.getElementById("wrapper-alertas");
+    container.innerHTML = "";
+
+    const hoje = new Date().toISOString().split('T')[0];
+
+    // Alerta 1: Contas Vencidas em aberto
+    const contasVencidas = DB.contas.filter(c => !c.paga && c.vencimento < hoje);
+    if(contasVencidas.length > 0) {
+        injectAlertElement(`Possui ${contasVencidas.length} conta(s) vencida(s)! Organize seus pagamentos.`, 'var(--danger)');
+    }
+
+    // Alerta 2: Troca de óleo iminente (Análise com base no Perfil do Veículo)
+    if(DB.veiculo && DB.veiculo.kmAtual > 0) {
+        const diferencaOleo = DB.veiculo.kmAtual - DB.veiculo.lastOleoKm;
+        const limiteTrocaOleo = DB.veiculo.tipo === 'Moto' ? 1000 : 5000;
+        
+        if (diferencaOleo >= limiteTrocaOleo) {
+            injectAlertElement(`⚠️ Atenção: Troca de óleo do veículo vencida ou próxima (${diferencaOleo} Km rodados).`, 'var(--warning)');
+        }
+    }
+}
+
+function injectAlertElement(mensagem, corFundo) {
+    const container = document.getElementById("wrapper-alertas");
+    const toast = document.createElement("div");
+    toast.className = "alert-toast";
+    toast.style.backgroundColor = corFundo;
+    toast.innerHTML = `<span>${mensagem}</span><span style="cursor:pointer;" onclick="this.parentElement.remove()">✕</span>`;
+    container.appendChild(toast);
+}
+
+// --- 11. ESCUTAS DE FORMULÁRIOS E SUBMITS ---
+function setupDomForms() {
+    // Form de Registro de Ganho
+    document.getElementById("form-ganho").addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const valsIndTxt = document.getElementById("ganho-valores-ind").value;
+        const arrValoresInd = valsIndTxt ? valsIndTxt.split(',').map(v => parseFloat(v.trim())).filter(v => !isNaN(v)) : [];
+
+        const novoGanho = {
+            id: generateId(),
+            data: document.getElementById("ganho-data").value,
+            atividade: document.getElementById("ganho-atividade").value,
+            bruto: parseFloat(document.getElementById("ganho-bruto").value),
+            corridas: parseInt(document.getElementById("ganho-corridas").value),
+            valoresInd: arrValoresInd,
+            recebimento: document.getElementById("ganho-recebimento").value
+        };
+
+        DB.ganhos.push(novoGanho);
+        saveStorage();
+        renderApp();
+        e.target.reset();
+        document.getElementById("ganho-data").valueAsDate = new Date();
+        switchTab('tab-home');
+    });
+
+    // Form de Contas Fixas ou Variáveis
+    document.getElementById("form-conta").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const tipoC = document.getElementById("conta-fluxo").value;
+        
+        const novaConta = {
+            id: generateId(),
+            nome: document.getElementById("conta-nome").value,
+            valor: parseFloat(document.getElementById("conta-valor").value),
+            vencimento: document.getElementById("conta-vencimento").value,
+            fluxo: tipoC,
+            parcelaAtual: tipoC === 'Fixa-Parcelada' ? parseInt(document.getElementById("conta-parcela-atual").value) : null,
+            parcelasTotal: tipoC === 'Fixa-Parcelada' ? parseInt(document.getElementById("conta-parcelas-total").value) : null,
+            categoria: tipoC === 'Variavel' ? document.getElementById("conta-categoria").value : '',
+            paga: false
+        };
+
+        DB.contas.push(novaConta);
+        saveStorage();
+        renderApp();
+        e.target.reset();
+        document.getElementById("conta-vencimento").valueAsDate = new Date();
+    });
+
+    // Form de Movimentações Manuais de Reservas
+    document.getElementById("form-movimentacao").addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const tipoOp = document.getElementById("mov-tipo").value;
+        const valOp = parseFloat(document.getElementById("mov-valor").value);
+        const resAlvo = document.getElementById("mov-reserva").value;
+
+        // Regra de Negócio: Complementação com Reserva de Emergência
+        if (tipoOp === 'Saida' && resAlvo === 'Manutencao') {
+            const totalBruto = DB.ganhos.reduce((acc, g) => acc + g.bruto, 0);
+            const rManutencaoSoma = (totalBruto * (DB.config.porcentagens.manutencao / 100)) + getSomaMovimentacoes("Manutencao");
+            
+            if (valOp > rManutencaoSoma) {
+                const rEmergenciaSoma = (totalBruto * (DB.config.porcentagens.emergencia / 100)) + getSomaMovimentacoes("Emergencia");
+                const falta = valOp - rManutencaoSoma;
+
+                if (rEmergenciaSoma >= falta) {
+                    if (confirm(`Saldo na Caixa de Manutenção insuficiente. Deseja cobrir o valor faltante de ${formatBRL(falta)} utilizando a sua Reserva de Emergência?`)) {
+                        // Debita o saldo máximo da manutenção
+                        DB.movimentacoes.push({ id: generateId(), data: document.getElementById("mov-data").value, reserva: 'Manutencao', tipo: 'Saida', valor: rManutencaoSoma, motivo: document.getElementById("mov-motivo").value + " (Saldo Total Manutenção)" });
+                        // Debita o restante da Emergência
+                        DB.movimentacoes.push({ id: generateId(), data: document.getElementById("mov-data").value, reserva: 'Emergencia', tipo: 'Saida', valor: falta, motivo: "Complementação de Manutenção: " + document.getElementById("mov-motivo").value });
+                        saveStorage(); e.target.reset(); renderApp(); return;
+                    } else { return; }
+                } else {
+                    alert("⚠️ Saldo insuficiente nas caixas de Manutenção e Emergência combinadas!");
+                    return;
+                }
+            }
+        }
+
+        DB.movimentacoes.push({
+            id: generateId(),
+            reserva: resAlvo,
+            tipo: tipoOp,
+            valor: valOp,
+            data: document.getElementById("mov-data").value,
+            motivo: document.getElementById("mov-motivo").value
+        });
+
+        saveStorage();
+        renderApp();
+        e.target.reset();
+        document.getElementById("mov-data").valueAsDate = new Date();
+    });
+
+    // Form de Configurações das Porcentagens
+    document.getElementById("form-config").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const gas = parseFloat(document.getElementById("cfg-pct-gasolina").value);
+        const tax = parseFloat(document.getElementById("cfg-pct-taxas").value);
+        const gar = parseFloat(document.getElementById("cfg-pct-garantia").value);
+        const eme = parseFloat(document.getElementById("cfg-pct-emergencia").value);
+        const man = parseFloat(document.getElementById("cfg-pct-manutencao").value);
+
+        if((gas + tax + gar + eme + man) > 100) {
+            alert("⚠️ Erro Crítico: A soma das porcentagens ultrapassa o limite físico de 100%!");
+            return;
+        }
+
+        DB.config.ciclo = parseInt(document.getElementById("cfg-ciclo").value);
+        DB.config.porcentagens = { gasolina: gas, taxas: tax, garantia: gar, emergencia: eme, manutencao: man };
+        
+        saveStorage();
+        renderApp();
+        alert("Padrões de distribuição salvos com sucesso.");
+    });
+
+    // Form de Perfil do Veículo
+    document.getElementById("form-veiculo").addEventListener("submit", (e) => {
+        e.preventDefault();
+        DB.veiculo = {
+            tipo: document.getElementById("vei-tipo").value,
+            modelo: document.getElementById("vei-modelo").value,
+            ano: document.getElementById("vei-ano").value,
+            kmAtual: parseInt(document.getElementById("vei-km").value) || 0,
+            consumoMedio: parseFloat(document.getElementById("vei-consumo").value) || 0,
+            lastOleoKm: parseInt(document.getElementById("vei-oleo").value) || 0,
+            lastRevisaoKm: parseInt(document.getElementById("vei-revisao").value) || 0
+        };
+        saveStorage();
+        renderApp();
+        alert("Ficha do veículo atualizada.");
+    });
+
+    // Gerenciador de cliques de navegação (Abas)
+    document.querySelectorAll(".tab-link").forEach(btn => {
+        btn.addEventListener("click", () => {
+            switchTab(btn.dataset.tab);
+        });
+    });
+}
+
+// --- 12. CONTROLADORES COMPLEMENTARES ---
+function switchTab(tabId) {
+    document.querySelectorAll(".tab-link").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    
+    const targetBtn = document.querySelector(`[data-tab="${tabId}"]`);
+    if(targetBtn) targetBtn.classList.add("active");
+    
+    const targetContent = document.getElementById(tabId);
+    if(targetContent) targetContent.classList.add("active");
+}
+
+function toggleFormParcelas(val) {
+    document.getElementById("row-parcelas").style.display = val === 'Fixa-Parcelada' ? 'grid' : 'none';
+    document.getElementById("group-categoria").style.display = val === 'Variavel' ? 'flex' : 'none';
+}
+
+function syncConfigInputs() {
+    document.getElementById("cfg-ciclo").value = DB.config.ciclo;
+    document.getElementById("cfg-pct-gasolina").value = DB.config.porcentagens.gasolina;
+    document.getElementById("cfg-pct-taxas").value = DB.config.porcentagens.taxas;
+    document.getElementById("cfg-pct-garantia").value = DB.config.porcentagens.garantia;
+    document.getElementById("cfg-pct-emergencia").value = DB.config.porcentagens.emergencia;
+    document.getElementById("cfg-pct-manutencao").value = DB.config.porcentagens.manutencao;
+
+    if (DB.veiculo) {
+        document.getElementById("vei-tipo").value = DB.veiculo.tipo || 'Moto';
+        document.getElementById("vei-modelo").value = DB.veiculo.modelo || '';
+        document.getElementById("vei-ano").value = DB.veiculo.ano || '';
+        document.getElementById("vei-km").value = DB.veiculo.kmAtual || '';
+        document.getElementById("vei-consumo").value = DB.veiculo.consumoMedio || '';
+        document.getElementById("vei-oleo").value = DB.veiculo.lastOleoKm || '';
+        document.getElementById("vei-revisao").value = DB.veiculo.lastRevisaoKm || '';
+    }
+
+    document.getElementById("ganho-data").valueAsDate = new Date();
+    document.getElementById("conta-vencimento").valueAsDate = new Date();
+    document.getElementById("mov-data").valueAsDate = new Date();
+}
+
+function liquidarConta(id) {
+    const conta = DB.contas.find(c => c.id === id);
+    if (conta) {
+        conta.paga = true;
+        
+        // Se a conta for parcelada, trata a evolução ou encerramento
+        if (conta.fluxo === 'Fixa-Parcelada') {
+            if (conta.parcelaAtual < conta.parcelasTotal) {
+                // Cria a cobrança do mês seguinte automaticamente
+                const dataVenc = new Date(conta.vencimento);
+                dataVenc.setMonth(dataVenc.getMonth() + 1);
+                
+                DB.contas.push({
+                    ...conta,
+                    id: generateId(),
+                    vencimento: dataVenc.toISOString().split('T')[0],
+                    parcelaAtual: conta.parcelaAtual + 1,
+                    paga: false
+                });
+                alert(`Conta Parcela ${conta.parcelaAtual}/${conta.parcelasTotal} paga! Próxima parcela gerada para o mês seguinte.`);
+            } else {
+                alert("🎉 Parabéns! Esta dívida foi quitada integralmente.");
+            }
+        }
+        saveStorage();
+        renderApp();
+    }
+}
+
+function deletarRegistroGanho(id) {
+    if(confirm("Excluir definitivamente este lançamento?")) {
+        DB.ganhos = DB.ganhos.filter(g => g.id !== id);
+        saveStorage(); renderApp();
+    }
+}
+
+function deletarConta(id) {
+    if(confirm("Remover esta despesa do sistema?")) {
+        DB.contas = DB.contas.filter(c => c.id !== id);
+        saveStorage(); renderApp();
+    }
+}
+
+// --- 13. SISTEMA DE IMPORTAÇÃO / EXPORTAÇÃO E BACKUP ---
+function exportToCSV() {
+    let csv = "\uFEFFData,Atividade,Ganho Bruto,Corridas,Forma Recebimento\n";
+    DB.ganhos.forEach(g => {
+        csv += `${g.data},${g.atividade},${g.bruto},${g.corridas},${g.recebimento}\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "girocerto_ganhos.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function exportBackupJSON() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(DB));
+    const dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", dataStr);
+    dlAnchor.setAttribute("download", "girocerto_backup.json");
+    dlAnchor.click();
+}
+
+function importBackupJSON(event) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const imported = JSON.parse(e.target.result);
+            if (imported.config && imported.ganhos && imported.contas) {
+                DB = imported;
+                saveStorage();
+                syncConfigInputs();
+                renderApp();
+                alert("Banco de dados restaurado com sucesso!");
+            } else {
+                alert("JSON inválido para a arquitetura D'Ledger Flow.");
+            }
+        } catch (err) {
+            alert("Erro na leitura do arquivo de backup.");
+        }
+    };
+    reader.readAsText(event.target.files[0]);
+}
+
+function hardResetSystem() {
+    if(confirm("🚨 ATENÇÃO: Deseja apagar TODOS os dados locais de forma irreversível?")) {
+        localStorage.removeItem("girocerto_db");
+        location.reload();
+    }
+}
+
+// --- 14. COMPONENTES UTILITÁRIOS GLOBAIS ---
+function initThemeEngine() {
+    const btn = document.getElementById("btn-theme-toggle");
+    let currentTheme = localStorage.getItem("girocerto_theme") || "dark";
+    document.documentElement.setAttribute("data-theme", currentTheme);
+
+    btn.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", currentTheme);
+        localStorage.setItem("girocerto_theme", currentTheme);
+    });
+}
+
+function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+function formatBRL(val) { return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+function formatDataBR(dataStr) {
+    if(!dataStr) return "--/--/----";
+    const p = dataStr.split("-");
+    return `${p[2]}/${p[1]}/${p[0]}`;
+}
+    </script>
+</body>
+</html>
